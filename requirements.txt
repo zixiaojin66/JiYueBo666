@@ -14,3 +14,5 @@ scikit_learn==1.2.1
 torch_geometric==2.1.0.post1
 -f https://data.pyg.org/whl/torch-1.13.0+cu116.html
 torch-sparse
+-f https://data.pyg.org/whl/torch-1.13.0+cu116.html
+torch-scatter
