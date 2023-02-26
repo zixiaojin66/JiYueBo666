@@ -241,9 +241,9 @@ def search_by_name():
             with col2:
                 pic = draw_chaimcal(Smiles)
 
-                st.header('显示药物分子图')
+                #st.header('显示药物分子图')
 
-                st.image(pic, caption=Smiles)
+                #st.image(pic, caption=Smiles)
 
                 st.header('显示药物得分表')
                 st.dataframe(dataframe2.style.highlight_max(axis=0))
