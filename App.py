@@ -29,7 +29,7 @@ device = torch.device(cuda_name if torch.cuda.is_available() else 'cpu')
 import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 
-path=r"\Supplementary Data 1.txt"
+path=r"Supplementary Data 1.txt"
 pic_path=r"17593290.png"
 model_path=r'net_params.pth'
 frequence_path=r'frequencyMat.csv'
