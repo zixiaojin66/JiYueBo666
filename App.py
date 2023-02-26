@@ -16,8 +16,6 @@ import scipy.io as io
 import networkx as nx
 from rdkit import Chem
 from rdkit.Chem import AllChem
-from rdkit.Chem import Draw
-from rdkit.Chem.Draw.MolDrawing import MolDrawing, DrawingOptions
 import scipy
 from sklearn.decomposition import PCA
 from sklearn.metrics import roc_auc_score, average_precision_score
@@ -443,9 +441,7 @@ def predict(model, device,x,edge_index,batch, sideEffectsGraph, DF, not_FC):
 
 def draw_chaimcal(str_smi):
     mol = Chem.MolFromSmiles(str_smi)
-    PILpic = Draw.MolToImage(mol, kekulize=False, wedgeBonds=False, size=(300, 300))
-    image=np.array(PILpic)
-    return image
+    return 
 
 def draw_topK(k,dataframe):
     sub_df=dataframe.iloc[:k]
