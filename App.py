@@ -307,11 +307,11 @@ def search_by_Chemical():
                         icon="ℹ️")
 
             with col2:
-                pic = draw_chaimcal(chamical_name)
+                #pic = draw_chaimcal(chamical_name)
 
-                st.header('显示药物分子图')
+                #st.header('显示药物分子图')
 
-                st.image(pic, caption=chamical_name)
+                #st.image(pic, caption=chamical_name)
                 st.header('显示药物得分表')
                 st.dataframe(dataframe2.style.highlight_max(axis=0))
 
