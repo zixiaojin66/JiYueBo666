@@ -532,7 +532,7 @@ knn = 5
 pca = False
 metric = 'cosine'
 frequencyMat=load_frequencyMat()
-model=load_model()
+model=load_model(device=device)
 if pca:
     pca_ = PCA(n_components=256)
     similarity_pca = pca_.fit_transform(frequencyMat)
