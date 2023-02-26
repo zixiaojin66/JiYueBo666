@@ -151,10 +151,10 @@ Top_K=st.sidebar.slider(label='选择 Top K副作用',min_value=1,max_value=25,v
 #-------------------------------------------------函数定义逻辑------------------------------------------------------------
 #@st.cache
 def load_model():
-    side_effect_label = r"E:\python\机器学习\side_effect_label_750.mat"
+    side_effect_label = r"side_effect_label_750.mat"
     input_dim = 109
     cuda_name = 'cuda:0'
-    model = GAT3().to(device=cuda_name)
+    model = GAT3().to(device=device)
     model.load_state_dict(torch.load(model_path), strict=False)
     return model
 
