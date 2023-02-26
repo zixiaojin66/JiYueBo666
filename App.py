@@ -533,7 +533,7 @@ pca = False
 metric = 'cosine'
 frequencyMat=load_frequencyMat()
 devicee = torch.device(cuda_name if torch.cuda.is_available() else 'cpu')
-model=load_model(device=devicee)
+model=load_model()
 if pca:
     pca_ = PCA(n_components=256)
     similarity_pca = pca_.fit_transform(frequencyMat)
