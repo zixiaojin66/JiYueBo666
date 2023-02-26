@@ -1,1 +1,2 @@
-apt-get update && apt-get install -y libxrender1
+apt-get update
+apt-get install libxrender1
