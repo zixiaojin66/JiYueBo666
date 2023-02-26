@@ -160,7 +160,7 @@ def load_model():
 
 #@st.cache
 def load_frequencyMat():
-    frequencyMat = np.loadtxt(frequence_path, delimiter=',', dtype='int')
+    frequencyMat = pd.read_csv(frequence_path, delimiter=',', dtype='float').values
     frequencyMat = frequencyMat.T
     return frequencyMat
 
