@@ -153,9 +153,8 @@ Top_K=st.sidebar.slider(label='选择 Top K副作用',min_value=1,max_value=25,v
 def load_model():
     side_effect_label = r"side_effect_label_750.mat"
     input_dim = 109
-    cuda_name = 'cuda:0'
     model = GAT3().to(device=device)
-    model.load_state_dict(torch.load(model_path), strict=False)
+    model.load_state_dict(torch.load(model_path), ,map_location='cpu',strict=False)
     return model
 
 #@st.cache
