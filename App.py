@@ -24,8 +24,6 @@ from PIL import Image
 from torch_geometric.data import Data, DataLoader
 from rdkit import Chem
 from rdkit.Chem import AllChem
-from rdkit.Chem import Draw
-from rdkit.Chem.Draw.MolDrawing import MolDrawing, DrawingOptions
 cuda_name='cuda:0'
 device = torch.device(cuda_name if torch.cuda.is_available() else 'cpu')
 import matplotlib.pyplot as plt
