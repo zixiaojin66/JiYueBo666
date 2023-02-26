@@ -101,7 +101,7 @@ def get_Smiles(Eng_name):
 #-------------------------------------------------------创建标题——————————————————————————————————————————————————————————————————
 st.set_page_config(page_title = 'CUG-GAT药物副作用预测',page_icon = '🕵️‍♀️',layout = 'wide',initial_sidebar_state='expanded')
 
-image_path = "机器学习/17593290.png"
+image_path = "17593290.png"
 absolute_path = os.path.abspath(image_path)
 
 
@@ -154,7 +154,7 @@ def load_model():
     side_effect_label = r"side_effect_label_750.mat"
     input_dim = 109
     model = GAT3().to(device=device)
-    model.load_state_dict(torch.load(model_path), ,map_location='cpu',strict=False)
+    model.load_state_dict(torch.load(model_path) ,map_location='cpu',strict=False)
     return model
 
 #@st.cache
