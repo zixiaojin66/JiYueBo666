@@ -29,12 +29,12 @@ device = torch.device(cuda_name if torch.cuda.is_available() else 'cpu')
 import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 
-path=r"E:\QQ文件下载\Supplementary Data 1.txt"
-pic_path=r"E:\QQ文件下载\17593290.png"
-model_path=r'E:\python\机器学习\net_params.pth'
-frequence_path=r'E:\python\机器学习\frequencyMat.csv'
-side_effect_path=r'E:\python\机器学习\side_effect_label_750.mat'
-raw_frequency_path=r'E:\python\机器学习\raw_frequency_750.mat'
+path=r"\Supplementary Data 1.txt"
+pic_path=r"17593290.png"
+model_path=r'net_params.pth'
+frequence_path=r'frequencyMat.csv'
+side_effect_path=r'side_effect_label_750.mat'
+raw_frequency_path=r'raw_frequency_750.mat'
 
 frequence=['none','非常罕见','罕见','不频繁','频繁','非常频繁']
 #===================================直接在这里修改路径==========================================================
@@ -122,7 +122,7 @@ def set_background(png_file):
     ''' % bin_str
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
-set_background('E:/python/机器学习/17593290.png')
+set_background('17593290.png')
 
 
 
