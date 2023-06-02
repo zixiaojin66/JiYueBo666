@@ -580,7 +580,7 @@ data_load_state.text('Information loading complete! ')
 
 st.info('During the side effect prediction, the frequency of occurrence of medication side effects is divided into five levels', icon="ℹ️")
 user_choice=st.sidebar.radio('Select the query format',('Search for side effects based on the medication name','Search for side effects based on the medication molecular formula','Inquire about the magnitude of a specific side effect for a particular medication'))
-st.sidebar.warning('1.This software can predict possible side effects based on the medication's ingredients and dosage. However, everyone's body reacts differently, and unexpected reactions may occur. It is important to consult a doctor and read the medication's instructions before using it.')
+st.sidebar.warning('1.This software can predict possible side effects based on the medication\'s ingredients and dosage. However, everyone\'s body reacts differently, and unexpected reactions may occur. It is important to consult a doctor and read the medication\'s instructions before using it.')
 st.sidebar.warning('2.Note: This software is not suitable for predicting medications specifically targeting certain symptoms or diseases. Please do not consider this software as a substitute for medical diagnosis or treatment.')
 st.sidebar.warning('3.This software does not collect any personal information from users.')
 if user_choice=='Search for side effects based on the medication name':
