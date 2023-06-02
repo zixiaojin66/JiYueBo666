@@ -35,7 +35,7 @@ frequence_path=r'frequencyMat.csv'
 side_effect_path=r'side_effect_label_750.mat'
 raw_frequency_path=r'raw_frequency_750.mat'
 
-frequence=['none','非常罕见','罕见','不频繁','频繁','非常频繁']
+frequence=['none','Very rare','Rare',' Infrequent','Frequent','Very frequent']
 #===================================直接在这里修改路径==========================================================
 
 
@@ -98,7 +98,7 @@ def get_Smiles(Eng_name):
 
 
 #-------------------------------------------------------创建标题——————————————————————————————————————————————————————————————————
-st.set_page_config(page_title = 'CUG-GAT药物副作用预测',page_icon = '🕵️‍♀️',layout = 'wide',initial_sidebar_state='expanded')
+st.set_page_config(page_title = 'Prediction of the frequency of medication side effects',page_icon = '🕵️‍♀️',layout = 'wide',initial_sidebar_state='expanded')
 
 image_path = "17593290.png"
 absolute_path = os.path.abspath(image_path)
@@ -138,11 +138,11 @@ st.write("<style>p2 {color: black;}</style>", unsafe_allow_html=True)#button
 st.write("<style>div.stAlert > div > div > div.stAlert-text {color: black;}</style>", unsafe_allow_html=True)
 
 
-st.title('CUG-GAT药物副作用预测')
+st.title('Prediction of the frequency of medication side effects')
 
 st.sidebar.expander('')
-st.sidebar.write('用户输入 ⬇️')
-Top_K=st.sidebar.slider(label='选择 Top K副作用',min_value=1,max_value=25,value=(1,5))[1]
+st.sidebar.write('User input ⬇️')
+Top_K=st.sidebar.slider(label='Select the top K side effects',min_value=1,max_value=25,value=(1,5))[1]
 
 #---------------------------------------------------创建标题-------------------------------------------------------------
 
@@ -170,7 +170,7 @@ def load_node_label():
 
 def search_by_name():
     # 输入药物名
-    medecine_name = st.text_input('请在下方文本栏输入药物名称：', value='点击这里输入')
+    medecine_name = st.text_input('Please enter the name of the medication in the text box below：', value='Please click here to enter')
 
     try:
         Eng_name = translate_name(medecine_name)
@@ -183,16 +183,16 @@ def search_by_name():
         Smiles = get_Smiles(Eng_name)
 
     # 构造API请求,点击确定获取药物分子式并进行预测
-    if st.button('开始预测'):
+    if st.button('Start prediction'):
 
         if Smiles != None:
-            state = st.text('开始进行药物解析...')
-            st.write('药物Smile分子式为:', Smiles)
+            state = st.text('Start medication analysis...')
+            st.write('The SMILES molecular formula of the medication is:', Smiles)
             latest_iteration = st.empty()
             bar = st.progress(0)
             for i in range(50):
                 # Update the progress bar with each iteration.
-                latest_iteration.text(f'解析进度:{i * 2 + 2}%')
+                latest_iteration.text(f'The progress of the analysis:{i * 2 + 2}%')
                 bar.progress(i * 2 + 1)
                 time.sleep(0.1)
             # ----------------------------------------预测药物代码-----------------------
@@ -207,7 +207,7 @@ def search_by_name():
 
             result=[frequence[x] for x in temp_result]
 
-            dataframe=pd.DataFrame(temp_result,index=data,columns=['频率评分'])
+            dataframe=pd.DataFrame(temp_result,index=data,columns=['Frequency rating'])
 
 
 
@@ -218,52 +218,50 @@ def search_by_name():
             # 显示进度
 
             # dataframe排序
-            dataframe.sort_values(by='频率评分', inplace=True, ascending=False)
+            dataframe.sort_values(by='Frequency rating', inplace=True, ascending=False)
 
-            result=list(dataframe['频率评分'])
+            result=list(dataframe['Frequency rating'])
 
             class_=[frequence[score] for score in result]
 
-            dataframe2=pd.DataFrame(class_,index=dataframe.index,columns=['频率评分'])
+            dataframe2=pd.DataFrame(class_,index=dataframe.index,columns=['Frequency rating'])
             # 加载完成
-            st.success('药物解析...完成!', icon="✅")
+            st.success('Medication analysis is completed!', icon="✅")
 
             col1, col2 = st.columns(2)
 
             with col1:
                 draw_topK(Top_K, dataframe)
 
-                st.info(
-                    '本软件旨在作用于科研药物研究，查询副作用只是作为参考，若您是患者，请到专业医疗机构咨询，切勿依赖本APP',
-                    icon="ℹ️")
-                st.info('药物分子数据来自于开源网站:https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/。',
+          
+                st.info('The molecular data of the medication is sourced from an open-access website:https://pubchem.ncbi.nlm.nih.gov/。',
                         icon="ℹ️")
             with col2:
                 pic = draw_chaimcal(Smiles)
 
-                #st.header('显示药物分子图')
+                #st.header('Displaying the molecular diagram of the medication')
 
                 #st.image(pic, caption=Smiles)
 
-                st.header('显示药物得分表')
+                st.header('Displaying the medication scoring table')
                 st.dataframe(dataframe2.style.highlight_max(axis=0))
             #draw_comparation(prob.cpu().detach())
 
 
         else:
 
-            st.warning('未查询到药物,这可能是由于输入药物未收录或您的网络不畅。请检查网络或输入内容后重试', icon="⚠️")
+            st.warning('No medication found. This could be due to the input medication not being included in the database or a problem with your network. Please check your network connection or try again with a different input.', icon="⚠️")
 
 def search_by_Chemical():
-    chamical_name = st.text_input('请在这里输入药物分子式 ', value='点击这里输入')
-    if st.button('开始预测'):
+    chamical_name = st.text_input('Please enter the molecular formula of the medication here: ', value='Please click here to enter')
+    if st.button('Start prediction'):
         if chamical_name != None:
-            state = st.text('正在解析药物...')
+            state = st.text('Analyzing the medication...')
             latest_iteration = st.empty()
             bar = st.progress(0)
             for i in range(50):
                 # Update the progress bar with each iteration.
-                latest_iteration.text(f'解析进度:{i * 2 + 2}%')
+                latest_iteration.text(f'The progress of the analysis:{i * 2 + 2}%')
                 bar.progress(i * 2 + 1)
                 time.sleep(0.1)
             # ----------------------------------------预测药物代码-----------------------
@@ -277,52 +275,50 @@ def search_by_Chemical():
 
             temp_result = [round(prob[0][i].item()) for i in range(994)]
 
-            dataframe = pd.DataFrame(temp_result, index=data, columns=['频率评分'])
+            dataframe = pd.DataFrame(temp_result, index=data, columns=['Frequency rating'])
 
             # ----------------------------------------预测药物代码-----------------------
             # 显示进度
 
             # dataframe排序
-            dataframe.sort_values(by='频率评分', inplace=True, ascending=False)
+            dataframe.sort_values(by='Frequency rating', inplace=True, ascending=False)
 
-            result=list(dataframe['频率评分'])
+            result=list(dataframe['Frequency rating'])
 
             class_=[frequence[score] for score in result]
 
-            dataframe2=pd.DataFrame(class_,index=dataframe.index,columns=['频率评分'])
+            dataframe2=pd.DataFrame(class_,index=dataframe.index,columns=['Frequency rating'])
 
 
             # 加载完成
-            st.success('药物解析...完成!', icon="✅")
+            st.success('Medication analysis is completed!', icon="✅")
             col1, col2 = st.columns(2)
             with col1:
                 draw_topK(Top_K, dataframe)
 
 
 
-                st.info(
-                    '本软件旨在作用于科研药物研究，查询副作用只是作为参考，若您是患者，请到专业医疗机构咨询，切勿依赖本APP',
-                    icon="ℹ️")
-                st.info('药物分子数据来自于开源网站:https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/。',
+                
+                st.info('The molecular data of the medication is sourced from an open-access website:https://pubchem.ncbi.nlm.nih.gov/',
                         icon="ℹ️")
 
             with col2:
                 #pic = draw_chaimcal(chamical_name)
 
-                #st.header('显示药物分子图')
+                #st.header('Displaying the molecular diagram of the medication')
 
                 #st.image(pic, caption=chamical_name)
-                st.header('显示药物得分表')
+                st.header('Displaying the medication scoring table')
                 st.dataframe(dataframe2.style.highlight_max(axis=0))
 
         else:
 
-            st.warning('未查询到药物，这可能是由于输入药物未收录或您的网络不畅。请检查网络或输入内容后重试',icon="⚠️")
+            st.warning('No medication found. This could be due to the input medication not being included in the database or a problem with your network. Please check your network connection or try again with a different input.',icon="⚠️")
 
 def seach_side_effect_with_name():
     # 输入药物名
-    medecine_name = st.text_input('请在下方文本栏输入药物名称：', value='清空这里输入')
-    side_effect_name=st.text_input('在下方输入副作用名:',value='清空这里输入')
+    medecine_name = st.text_input('Please enter the molecular formula of the medication here: ', value='Please click here to enter')
+    side_effect_name=st.text_input('Please enter the name of the side effect here:',value='Please click here to enter')
 
     try:
         Eng_name = translate_name(medecine_name)
@@ -333,14 +329,14 @@ def seach_side_effect_with_name():
         Smiles = None
     else:
         Smiles = get_Smiles(Eng_name)
-    if st.button('确定'):
+    if st.button('Confirmed'):
         if Smiles != None:
-            state = st.text('开始进行药物解析...')
+            state = st.text('Start medication analysis...')
             latest_iteration = st.empty()
             bar = st.progress(0)
             for i in range(50):
                 # Update the progress bar with each iteration.
-                latest_iteration.text(f'解析进度:{i * 2 + 2}%')
+                latest_iteration.text(f'Analysis progress:{i * 2 + 2}%')
                 bar.progress(i * 2 + 1)
                 time.sleep(0.1)
             # ----------------------------------------预测药物代码-----------------------
@@ -354,43 +350,42 @@ def seach_side_effect_with_name():
             temp_result = [round(prob[0][i].item()) for i in range(994)]
 
             result = [frequence[x] for x in temp_result]
-            dataframe = pd.DataFrame(result, index=data, columns=['频率评分'])
+            dataframe = pd.DataFrame(result, index=data, columns=['Frequency rating])
             # ----------------------------------------预测药物代码-----------------------
 
             # 显示进度
 
             # dataframe排序
-            dataframe.sort_values(by='频率评分', inplace=True, ascending=False)
+            dataframe.sort_values(by='Frequency rating', inplace=True, ascending=False)
 
             # 加载完成
-            st.success('药物解析...完成!', icon="✅")
+            st.success('Medication analysis is completed! ', icon="✅")
 
 
-            st.write('查询成功，副作用频率评分为：',dataframe.loc[side_effect_name,'频率评分'])
+            st.write('Side effect frequency rating is：',dataframe.loc[side_effect_name,'Frequency rating'])
 
-            st.info('本软件旨在作用于科研药物研究，查询副作用只是作为参考，若您是患者，请到专业医疗机构咨询，切勿依赖本APP',
-                    icon="ℹ️")
-            st.info('药物分子数据来自于开源网站:https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/。', icon="ℹ️")
+            
+            st.info('The molecular data of the medication is sourced from an open-access website:https://pubchem.ncbi.nlm.nih.gov/', icon="ℹ️")
 
         else:
 
-            st.warning('未查询到药物,这可能是由于输入药物未收录或您的网络不畅。请检查网络或输入内容后重试', icon="⚠️")
+            st.warning('No medication found. This could be due to the input medication not being included in the database or a problem with your network. Please check your network connection or try again with a different input.', icon="⚠️")
 
 def seach_side_effect_with_chemical():
     # 输入药物名
-    medecine_name = st.text_input('请在下方文本栏输入药物分子式：', value='清空这里输入')
-    side_effect_name = st.text_input('在下方输入副总用名:', value='清空这里输入')
-    if st.button('确定'):
+    medecine_name = st.text_input('Please enter the molecular formula of the medication here: ', value='Please click here to enter')
+    side_effect_name = st.text_input('Please enter the name of the side effect here:',value='Please click here to enter')
+    if st.button('Confirmed'):
         Smiles = get_Smiles(medecine_name)
 
         if Smiles != None:
-            state = st.text('开始进行药物解析...')
-            st.write('药物Smile分子式为:', Smiles)
+            state = st.text('Start medication analysis...')
+            st.write('The SMILES molecular formula of the medication is:', Smiles)
             latest_iteration = st.empty()
             bar = st.progress(0)
             for i in range(50):
                 # Update the progress bar with each iteration.
-                latest_iteration.text(f'解析进度:{i * 2 + 2}%')
+                latest_iteration.text(f'Progress of analysis:{i * 2 + 2}%')
                 bar.progress(i * 2 + 1)
                 time.sleep(0.1)
             # ----------------------------------------预测药物代码-----------------------
@@ -404,23 +399,23 @@ def seach_side_effect_with_chemical():
             temp_result = [round(prob[0][i].item()) for i in range(994)]
 
             result = [frequence[x] for x in temp_result]
-            dataframe = pd.DataFrame(result, index=data, columns=['频率评分'])
-            #dataframe = pd.DataFrame(temp_result, index=data, columns=['频率评分'])
+            dataframe = pd.DataFrame(result, index=data, columns=['Frequency rating'])
+            #dataframe = pd.DataFrame(temp_result, index=data, columns=['Frequency rating'])
             # ----------------------------------------预测药物代码-----------------------
 
             # 显示进度
 
             # dataframe排序
-            dataframe.sort_values(by='频率评分', inplace=True, ascending=False)
+            dataframe.sort_values(by='Frequency rating', inplace=True, ascending=False)
 
             # 加载完成
-            st.success('药物解析...完成!', icon="✅")
+            st.success('Medication analysis is completed!', icon="✅")
 
-            st.write('查询成功，副作用频率评分为：', dataframe.loc[side_effect_name, '频率评分'])
+            st.write('Side effect frequency rating is：', dataframe.loc[side_effect_name, 'Frequency rating'])
 
         else:
 
-            st.warning('未查询到药物,这可能是由于输入药物未收录或您的网络不畅。请检查网络或输入内容后重试', icon="⚠️")
+            st.warning('No medication found. This could be due to the input medication not being included in the database or a problem with your network. Please check your network connection or try again with a different input.', icon="⚠️")
 
 def predict(model, device,x,edge_index,batch, sideEffectsGraph, DF, not_FC):
     model.eval()
@@ -448,13 +443,13 @@ def draw_topK(k,dataframe):
     # plt.xticks(rotation=90)
     # st.pyplot(fig)
     #st.bar_chart(sub_df)
-    st.header('副作用评分柱状图')
+    st.header('Bar Chart of Side Effect Ratings')
     fig = go.Figure(
-        data=[go.Bar(x=sub_df.index, y=sub_df['频率评分'], name='副作用1评分')],
+        data=[go.Bar(x=sub_df.index, y=sub_df['Frequency Rating'], name='Side Effect Rating')],
         layout=go.Layout(
             title='',
-            xaxis=dict(title='样本编号'),
-            yaxis=dict(title='评分'),
+            xaxis=dict(title='Sample ID'),
+            yaxis=dict(title='Rating'),
         )
     )
     st.plotly_chart(fig)
@@ -509,8 +504,8 @@ def draw_comparation(model_res):
     # 显示图例
 
     plt.legend(loc='lower right')
-    plt.title("副作用对比图")
-    plt.ylabel("频率")
+    plt.title("Side Effects Comparison Chart")
+    plt.ylabel("Frequency rating")
 
 
     st.pyplot(fig)
@@ -520,7 +515,7 @@ def draw_comparation(model_res):
 
 #创建一个文本布局
 
-data_load_state = st.text('正在加载信息...')
+data_load_state = st.text('Loading information...')
 
 #-------------------------------------------------------后端逻辑----------------------------------------------------------
 # 定义参数
@@ -581,22 +576,22 @@ supply_effect=data
 #-----------------------------------------------------streamlit逻辑------------------------------------------------------
 
 
-data_load_state.text('信息加载完毕!')
+data_load_state.text('Information loading complete! ')
 
-st.info('副作用预测中，将药物副作用出现频率分为五个等级', icon="ℹ️")
-user_choice=st.sidebar.radio('选择查询形式',('根据药物名查询副作用','根据药物分子式查询副作用','查询某药物某副作用大小'))
-st.sidebar.warning('1.该软件可根据药物成分及用量预测可能出现的副作用。但是，每个人的身体反应不同，可能会出现意外的反应，请务必在使用药物前咨询医生并阅读药品说明书。')
-st.sidebar.warning('2.注意：该软件不适用于预测针对特定症状或疾病的药物。请勿将该软件作为医疗诊断或治疗的替代品。')
-st.sidebar.warning('3.本软件不会收集用户的任何个人信息。')
-if user_choice=='根据药物名查询副作用':
+st.info('During the side effect prediction, the frequency of occurrence of medication side effects is divided into five levels', icon="ℹ️")
+user_choice=st.sidebar.radio('Select the query format',('Search for side effects based on the medication name','Search for side effects based on the medication molecular formula','Inquire about the magnitude of a specific side effect for a particular medication'))
+st.sidebar.warning('1.This software can predict possible side effects based on the medication's ingredients and dosage. However, everyone's body reacts differently, and unexpected reactions may occur. It is important to consult a doctor and read the medication's instructions before using it.')
+st.sidebar.warning('2.Note: This software is not suitable for predicting medications specifically targeting certain symptoms or diseases. Please do not consider this software as a substitute for medical diagnosis or treatment.')
+st.sidebar.warning('3.This software does not collect any personal information from users.')
+if user_choice=='Search for side effects based on the medication name':
     search_by_name()
-elif user_choice=='根据药物分子式查询副作用':
+elif user_choice=='Search for side effects based on the medication molecular formula':
     search_by_Chemical()
-elif user_choice=='查询某药物某副作用大小':
+elif user_choice=='Inquire about the magnitude of a specific side effect for a particular medication':
     option = st.selectbox(
-        '如何查询药物',
-        ('分子式', '药物名'))
-    if option=='药物名':
+        'How to search for medications',
+        ('Molecular formula', 'Medication name'))
+    if option=='Medication name':
         seach_side_effect_with_name()
     else:
         seach_side_effect_with_chemical()
