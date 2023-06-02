@@ -350,7 +350,7 @@ def seach_side_effect_with_name():
             temp_result = [round(prob[0][i].item()) for i in range(994)]
 
             result = [frequence[x] for x in temp_result]
-            dataframe = pd.DataFrame(result, index=data, columns=['Frequency rating])
+            dataframe = pd.DataFrame(result, index=data, columns=['Frequency rating'])
             # ----------------------------------------预测药物代码-----------------------
 
             # 显示进度
