@@ -445,7 +445,7 @@ def draw_topK(k,dataframe):
     #st.bar_chart(sub_df)
     st.header('Bar Chart of Side Effect Ratings')
     fig = go.Figure(
-        data=[go.Bar(x=sub_df.index, y=sub_df['Frequency Rating'], name='Side Effect Rating')],
+        data=[go.Bar(x=sub_df.index, y=sub_df['Frequency rating'], name='Side Effect Rating')],
         layout=go.Layout(
             title='',
             xaxis=dict(title='Sample ID'),
