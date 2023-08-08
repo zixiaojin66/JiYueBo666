@@ -63,10 +63,10 @@ def translate_name(chinese):
     :param chinese:药物中文名
     :return: 药物英文名
     '''
-    translator = LanguageTrans("C2E")
+    #translator = LanguageTrans("C2E")
 
-    word = translator.trans(chinese)
-
+    #word = translator.trans(chinese)
+    word = chinese
     return word
 
 def find_Molecular_formula(Eng_name):
