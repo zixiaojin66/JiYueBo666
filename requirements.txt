@@ -1,9 +1,9 @@
-torch==1.12.0
+torch==1.12.1
+torch_geometric==1.7.2
 torch-scatter==2.0.9
 torch_cluster==1.6.0
-torch_sparse==0.6.14
+torch_sparse==0.6.15
 torch_spline_conv==1.2.1
-torch_geometric
 matplotlib==3.5.2
 translate==3.6.1
 numpy==1.25.2
