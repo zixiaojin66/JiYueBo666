@@ -90,7 +90,7 @@ def get_Smiles(Eng_name):
     # 解析响应
     if response.status_code == 200:
         data = response.json()
-        smiles = data['PropertyTable']['Properties'][0]['CanonicalSMILES']
+        smiles = data['PropertyTable']['Properties'][0]['ConnectivitySMILES']
         return smiles
     else:
         return None
